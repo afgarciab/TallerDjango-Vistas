@@ -16,6 +16,7 @@ def variables_view(request):
             variables_dto = vl.get_variables()
             variables = serializers.serialize('json', variables_dto)
             return HttpResponse(variables, 'application/json')
+
     if request.method == 'POST':
         variable_dto = vl.create_variable(json.loads(request.body))
         variable = serializers.serialize('json', [variable_dto,])

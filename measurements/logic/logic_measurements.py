@@ -19,3 +19,7 @@ def update_measurement(var_pk, new_var):
     measurement.name = new_var["name"]
     measurement.save()
     return measurement
+
+def delete_measuement(var_pk):
+    measurement = Measurement.objects.get(pk=var_pk)
+    measurement.delete()

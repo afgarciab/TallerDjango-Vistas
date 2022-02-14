@@ -11,17 +11,17 @@ def measurements_view(request):
     if request.method == 'GET':
         id = request.GET.get("id", None)
         if id:
-            measurement = vl.get_measurement(pk)
-            measurement_dto = serializers.serialize('json', measurement)
+            measurement_dto = vl.get_measurement(id)
+            measurement = serializers.serialize('json', [measurement_dto,])
             return HttpResponse(measurement_dto, 'application/json')
         else:
-            measurement = vl.get_measurements()
-            measurement_dto = serializers.serialize('json', measurement)
+            measurement_dto = vl.get_measurements()
+            measurement = serializers.serialize('json', measurement_dto)
             return HttpResponse(measurement_dto, 'application/json')
 
     if request.method == 'POST':
-        measurement = vl.create_measurement(json.loads(request.body))
-        measurement_dto = serializers.serialize('json', measurement)
+        measurement_dto = vl.create_measurement(json.loads(request.body))
+        measurement = serializers.serialize('json', [measurement_dto,])
         return HttpResponse(measurement_dto, 'application/json')
 
 @csrf_exempt
@@ -34,6 +34,11 @@ def measurement_view(request, pk):
     if request.method == 'PUT':
         measurement_dto = vl.update_measurement(pk, json.loads(request.body))
         measurement = serializers.serialize('json', [measurement_dto,])
+        return HttpResponse(measurement, 'application/json')
+
+    if request.method == 'DELETE':
+        measurement_dto = vl.delete_measuement(pk)
+        measurement = serializers.serialize('json' [measurement_dto,])
         return HttpResponse(measurement, 'application/json')
 
 
